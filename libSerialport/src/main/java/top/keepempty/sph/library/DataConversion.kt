@@ -160,4 +160,20 @@ object DataConversion {
     fun hexToDec(hex: String): Long {
         return hex.toLong(16)
     }
+
+    /**
+     * 十六进制转十进制数组
+     * @param hex
+     * @return
+     */
+    fun hexStringToIntArray(hex: String): IntArray? {
+        if (hex.length % 2 != 0) {
+            return null
+        }
+        val arr = IntArray(hex.length / 2)
+        for (i in 0 until hex.length / 2) {
+            arr[i] = hexToInt(hex.substring(2 * i, 2 * (i + 1)))
+        }
+        return arr
+    }
 }
