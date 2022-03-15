@@ -59,6 +59,19 @@ class SerialPortHelper(
     }
 
     /**
+     * 发送Ascii数据
+     *
+     * @param asciiCommands
+     */
+    fun sendAscii(asciiCommands: String) {
+        if (!isOpenDevice()) {
+            Log.d(TAG, "You not open device !!!")
+            return
+        }
+        serialPort.writePort(asciiCommands.toByteArray())
+    }
+
+    /**
      * 关闭串口
      */
     fun closeDevice() {
