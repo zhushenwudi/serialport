@@ -1,10 +1,8 @@
 package top.keepempty.sph.library
 
-import android.util.Log
-
 class SerialPortHelper(
     private val maxSize: Int = 0,       // 最大接收数据的长度
-    private val mutableData: EventLiveData<ByteArray>,
+    private val mListener: SerialListener,
     private val serialPortConfig: SerialPortConfig = SerialPortConfig(),
     private val isReceiveMaxSize: Boolean = false  // 是否需要返回最大数据接收长度
 ) {
@@ -17,7 +15,8 @@ class SerialPortHelper(
 
     fun openDevice(): Boolean {
         if (serialPortConfig.path == null) {
-            throw IllegalArgumentException("You not have setting the device path !")
+            mListener.onRunError(Exception("You not have setting the device path !"))
+            return false
         }
         val isOpenSuccess = serialPort.openPort(
             serialPortConfig.path!!,
@@ -36,7 +35,7 @@ class SerialPortHelper(
         if (isOpenSuccess == 1) {
             mIsOpen = true
             // 创建数据处理
-            processingData = SphDataProcess(maxSize, mutableData, isReceiveMaxSize)
+            processingData = SphDataProcess(maxSize, mListener, isReceiveMaxSize)
             // 开启读写线程
             sphThreads = SphThreads(serialPort, processingData)
         } else {
@@ -52,7 +51,7 @@ class SerialPortHelper(
      */
     fun sendHex(hexCommands: String) {
         if (!isOpenDevice()) {
-            Log.d(TAG, "You not open device !!!")
+            mListener.onRunError(Exception("You not open device !!!"))
             return
         }
         serialPort.writePort(DataConversion.decodeHexString(hexCommands))
@@ -65,7 +64,7 @@ class SerialPortHelper(
      */
     fun sendAscii(asciiCommands: String) {
         if (!isOpenDevice()) {
-            Log.d(TAG, "You not open device !!!")
+            mListener.onRunError(Exception("You not open device !!!"))
             return
         }
         serialPort.writePort(asciiCommands.toByteArray())
@@ -84,9 +83,5 @@ class SerialPortHelper(
      */
     fun isOpenDevice(): Boolean {
         return mIsOpen
-    }
-
-    companion object {
-        val TAG: String = SerialPortHelper::class.java.simpleName
     }
 }

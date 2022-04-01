@@ -2,7 +2,7 @@ package top.keepempty.sph.library
 
 class SphDataProcess(
     private val maxSize: Int,
-    private val mutableData: EventLiveData<ByteArray>,
+    private val mListener: SerialListener,
     private val isReceiveMaxSize: Boolean,  // 是否按最大接收长度进行返回
 ) {
     /**
@@ -115,6 +115,6 @@ class SphDataProcess(
     }
 
     private fun sendMessage(resultBytes: ByteArray) {
-        mutableData.postValue(resultBytes)
+        mListener.onNewData(resultBytes)
     }
 }
