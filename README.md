@@ -40,12 +40,12 @@ kotlin代码如下:
 ```kotlin
 object BalanceConfig: SerialPortConfig(){
     fun getBalanceConfig(): BalanceConfig {
-        mode = 0					// 是否使用原始模式(Raw Mode)方式来通讯
-        path = "dev/ttyS3"			// 串口地址 [ttyS0 ~ ttyS6, ttyUSB0 ~ ttyUSB4]
-        baudRate = 9600				// 波特率
-        dataBits = 8				// 数据位 [7, 8]
-        parity = 'n'				// 检验类型 [N(无校验) ,E(偶校验), O(奇校验)] (大小写随意)
-        stopBits = 1				// 停止位 [1, 2]
+        mode = 0			// 是否使用原始模式(Raw Mode)方式来通讯
+        path = "dev/ttyS3"		// 串口地址 [ttyS0 ~ ttyS6, ttyUSB0 ~ ttyUSB4]
+        baudRate = 9600			// 波特率
+        dataBits = 8			// 数据位 [7, 8]
+        parity = 'n'			// 检验类型 [N(无校验) ,E(偶校验), O(奇校验)] (大小写随意)
+        stopBits = 1			// 停止位 [1, 2]
         return this
     }
 }
