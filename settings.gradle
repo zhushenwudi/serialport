@@ -1,4 +1,4 @@
 rootProject.name = "LibSerialport"
-//include ':app'
+include ':app'
 include ':libSerialport'
-//include ':serialport'
+include ':serialport'

@@ -1,8 +1,11 @@
 package top.keepempty.sph.library
 
+import androidx.annotation.Keep
+
 /**
  * 串口操作类
  */
+@Keep
 class SerialPortJNI {
     // 保存c++类的地址
     private val nativeSerialPort: Long = 0

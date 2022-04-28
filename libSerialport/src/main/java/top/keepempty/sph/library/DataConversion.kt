@@ -176,4 +176,56 @@ object DataConversion {
         }
         return arr
     }
+
+    /**
+     * 字节数组转十六进制
+     * @param src
+     * @param offset
+     * @param length
+     * @return
+     */
+    fun bytesToHexString(src: ByteArray, offset: Int, length: Int): String? {
+        val stringBuilder = StringBuilder("")
+        if (src.isEmpty()) {
+            return null
+        }
+        for (i in offset until offset + length) {
+            val v: Int = src[i].toInt() and 0xFF
+            val hv = Integer.toHexString(v)
+            if (hv.length == 1) {
+                stringBuilder.append(0)
+            }
+            stringBuilder.append(hv)
+        }
+        return stringBuilder.toString().toUpperCase()
+    }
+
+    /**
+     * 十六进制转字符数组
+     * @param hexString
+     * @return
+     */
+    fun hexStringToBytes(hexString: String): ByteArray? {
+        if (hexString.isEmpty()) {
+            return null
+        }
+        val hexStr = hexString.toUpperCase()
+        val length = hexStr.length / 2
+        val hexChars = hexStr.toCharArray()
+        val d = ByteArray(length)
+        for (i in 0 until length) {
+            val pos = i * 2
+            d[i] = (charToByte(hexChars[pos]).toInt() shl 4 or charToByte(hexChars[pos + 1]).toInt()).toByte()
+        }
+        return d
+    }
+
+    /**
+     * 字符转字节
+     * @param char
+     * @return
+     */
+    private fun charToByte(char: Char): Byte {
+        return "0123456789ABCDEF".indexOf(char).toByte()
+    }
 }

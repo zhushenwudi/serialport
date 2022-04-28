@@ -21,14 +21,19 @@ import java.util.*
  * (8)．最后得到的CRC寄存器内容即为CRC16码。(注意得到的CRC码即为低前高后顺序)
  */
 object CRC16 {
+    //CRC寄存器全为1
+    var CRC = 0x0000ffff
+    //多项式校验值
+    var POLYNOMIAL = 0x00008408
+
     /**
      * 计算CRC16校验码
      *
-     * @param data 需要校验的字符串
+     * @param str 需要校验的字符串
      * @return 校验码
      */
-    fun getCRC(data: String): String {
-        var data = data
+    fun getCRC(str: String): String {
+        var data = str
         data = data.replace(" ", "")
         val len = data.length
         if (len % 2 != 0) {
@@ -50,14 +55,9 @@ object CRC16 {
      * @return [String] 校验码
      * @since 1.0
      */
-    fun getCRC(bytes: ByteArray): String {
-        //CRC寄存器全为1
-        var CRC = 0x0000ffff
-        //多项式校验值
-        val POLYNOMIAL = 0x00008408
-        var i: Int
+    private fun getCRC(bytes: ByteArray): String {
         var j: Int
-        i = 0
+        var i = 0
         while (i < bytes.size) {
             CRC = CRC xor (bytes[i].toInt() and 0x000000ff)
             j = 0
