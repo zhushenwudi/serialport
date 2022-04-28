@@ -8,17 +8,17 @@ import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 class BalanceHelper(
-    private val callback: (message: String) -> Unit,
-    private val message: (str: String) -> Unit
+    private var callback: ((message: String) -> Unit)?,
+    private var message: ((str: String) -> Unit)?
 ) : SerialListener {
     private var serialPortHelper: SerialPortHelper? = null
     private var isHandle = AtomicBoolean(false)
     private var sendScope: CoroutineScope? = null
 
     fun start() {
-        Log.d(TAG, START_LOG)
+        Log.e(TAG, START_LOG)
         try {
-            val config = MySerialPortConfig.getInnerBalanceConfig()
+            val config = BalanceConfig.getBalanceConfig()
             serialPortHelper = SerialPortHelper(MAX_SIZE, this, config)
             if (serialPortHelper?.openDevice() == false) {
                 Log.d(TAG, OPEN_BALANCE_FAILED)
@@ -43,7 +43,8 @@ class BalanceHelper(
     }
 
     fun stop() {
-        Log.d(TAG, STOP_LOG)
+        callback = null
+        message = null
         try {
             if (serialPortHelper?.isOpenDevice() == true) {
                 serialPortHelper?.closeDevice()
@@ -56,6 +57,7 @@ class BalanceHelper(
             sendScope?.cancel()
             sendScope = null
         }
+        Log.e(TAG, STOP_LOG)
     }
 
     fun isRunning(): Boolean {
@@ -77,12 +79,12 @@ class BalanceHelper(
         }
         isHandle.set(true)
         val result = Arrays.toString(data)
-        callback(result)
+        callback?.invoke(result)
         isHandle.set(false)
     }
 
     override fun onRunError(e: Exception?) {
-        message(e.toString())
+        message?.invoke(e.toString())
         stop()
     }
 }

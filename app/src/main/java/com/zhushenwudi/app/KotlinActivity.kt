@@ -4,12 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 
-class MainActivity : AppCompatActivity() {
+class KotlinActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "MainActivity"
     }
 
-    // kotlin 写法
     private val balanceApi by lazy {
         BalanceHelper({
             Log.d(TAG, "balance: $it")
@@ -18,7 +17,6 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    // java 写法
     private val rfidApi by lazy {
         RfidHelper().setCallback(object : RfidCallback {
             override fun callback(result: String) {
