@@ -1,4 +1,4 @@
-# SerialPortHelperKt
+# SerialPortHelper
 
 三年了，你知道我这三年是怎么过来的吗？
 
@@ -192,3 +192,12 @@ rfidApi.stop()
 4.Log截图
 
 ![Image text](https://raw.githubusercontent.com/zhushenwudi/serialport/master/example.png)
+
+### 注意事项
+
+1. 本项目无需添加任何混淆规则
+2. 请在 jniLibs 目录放入对应 abi 的so文件（根据自己的设备酌情导入来减少打包的大小）
+
+## 许可证
+
+[MIT](https://github.com/zhushenwudi/serialport/blob/master/LICENSE)
