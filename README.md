@@ -189,9 +189,5 @@ rfidApi.start()
 rfidApi.stop()
 ```
 
-<!--4.Log截图  
-https://gitee.com/zhushenwudi/serial-port-helper-kt/raw/master/example.png  
-or  
-https://raw.githubusercontent.com/zhushenwudi/SerialPortHelperKt/master/example.png
-
-![Image text](https://gitee.com/zhushenwudi/serial-port-helper-kt/raw/master/example.png)-->
+4.Log截图
+![Image text](https://raw.githubusercontent.com/zhushenwudi/serialport/master/example.png)
