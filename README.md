@@ -190,4 +190,5 @@ rfidApi.stop()
 ```
 
 4.Log截图
+
 ![Image text](https://raw.githubusercontent.com/zhushenwudi/serialport/master/example.png)
