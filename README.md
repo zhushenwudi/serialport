@@ -26,7 +26,7 @@ repositories {
 ```groovy
 dependencies {
     ...
-    implementation 'com.github.zhushenwudi:serialport:1.4'
+    implementation 'com.github.zhushenwudi:serialport:1.5'
 }
 ```
 
