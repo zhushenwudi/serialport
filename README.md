@@ -30,6 +30,10 @@ dependencies {
 }
 ```
 
+3.导入对应平台的 so 库
+
+    app/src/main/jniLibs/xxx/libSerialPortLib.so
+
 #### 示例
 1.配置串口通信协议
 
