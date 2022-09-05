@@ -1,7 +1,15 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'maven-publish'
+    id 'maven'
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
 }
 
 android {
@@ -22,19 +30,6 @@ android {
         }
     }
 
-    afterEvaluate {
-        publishing {
-            publications {
-                release(MavenPublication) {
-                    from components.release
-                    groupId = 'com.zhushenwudi.serialport'
-                    artifactId = 'serialport'
-                    version = '1.5'
-                }
-            }
-        }
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -42,11 +37,31 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    uploadArchives {
+        configuration = configurations.archives
+        repositories {
+            mavenDeployer {
+                def username = localProperties.getProperty("nexusName")
+                def password = localProperties.getProperty("nexusPwd")
+                repository(url: 'https://nexus3.devops.intelab.cloud/repository/android-maven/') {
+                    authentication(userName: username, password: password)
+                }
+                pom.project {
+                    version '1.0.0'
+                    artifactId 'serialport'
+                    groupId 'com.ilab.android'
+                    packaging 'aar'
+                    description 'init'
+                }
+            }
+        }
+    }
 }
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
 }
