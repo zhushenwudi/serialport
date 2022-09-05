@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'maven'
+    id 'maven-publish'
 }
 
 def localProperties = new Properties()
@@ -38,21 +38,24 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
-    uploadArchives {
-        configuration = configurations.archives
-        repositories {
-            mavenDeployer {
-                def username = localProperties.getProperty("nexusName")
-                def password = localProperties.getProperty("nexusPwd")
-                repository(url: 'https://nexus3.devops.intelab.cloud/repository/android-maven/') {
-                    authentication(userName: username, password: password)
+    afterEvaluate {
+        publishing {
+            repositories {
+                maven {
+                    name('nexus')
+                    url uri('https://nexus3.devops.intelab.cloud/repository/android-maven/')
+                    credentials {
+                        username(localProperties.getProperty("nexusName"))
+                        password(localProperties.getProperty("nexusPwd"))
+                    }
                 }
-                pom.project {
-                    version '1.0.0'
-                    artifactId 'serialport'
-                    groupId 'com.ilab.android'
-                    packaging 'aar'
-                    description 'init'
+            }
+            publications {
+                release(MavenPublication) {
+                    from components.release
+                    groupId = 'com.zhushenwudi.serialport'
+                    artifactId = 'serialport'
+                    version = '1.5.1'
                 }
             }
         }
