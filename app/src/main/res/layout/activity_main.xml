@@ -6,10 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".KotlinActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/btnChoose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="选择串口地址"
+        android:textSize="50sp"
+        android:singleLine="true"
+        android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
