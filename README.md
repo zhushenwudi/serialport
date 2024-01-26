@@ -114,10 +114,8 @@ java代码如下:
     详看com.zhushenwudi.app.RfidHelper
 
 ```java
-// 1. 将类实现SerialListener接口
-public class RfidHelper implements SerialListener {}
 
-// 2. 初始化
+// 1. 初始化
 serialPortHelper = new SerialPortHelper(
 	15, 	// 每次接受数据的最大长度
 	new SerialListener() {
@@ -135,13 +133,13 @@ serialPortHelper = new SerialPortHelper(
 	false
 );
 
-// 3. 打开串口，返回为true表示打开成功
+// 2. 打开串口，返回为true表示打开成功
 serialPortHelper.openDevice();
 
-// 4. 发送串口数据
+// 3. 发送串口数据
 serialPortHelper.sendHex("要发送的16进制字符串");
 
-// 5. 判断串口实例是否创建（是否正在运行）
+// 4. 判断串口实例是否创建（是否正在运行）
 serialPortHelper.isRunning();
 ```
 
